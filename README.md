@@ -1,3 +1,14 @@
+Opendoor fork of https://github.com/facebook/create-react-app.
+
+This fork exists in order to remove ModuleScopePlugin from the react-scripts webpack config. That plugin throws errors in cake because it fails to recognize aliased libs like bricks as node modules (and therefore OK to import even though they're outside of the src directory). It isn't sufficient to remove the plugin via craco because it also throws errors in the Cypress environment and Cypress doesn't use our craco settings.
+
+In order to publish a new version of this forked library to NPM:
+
+Rev the version, either by manually adjusting the version field in the package.json, or via yarn version --patch (| minor | major, ref https://classic.yarnpkg.com/lang/en/docs/cli/version/).
+Ensure your desired changes are code reviewed, and merged into the master branch.
+Ensure you have an NPM_TOKEN in your PATH with write privileges. The code repo injects an NPM_TOKEN into your environment with these permissions, so you should be able to navigate to code/, echo $NPM_TOKEN, and then export NPM_TOKEN=<the_token> from this project's working directory. Verify it has been set by running echo $NPM_TOKEN.
+Publish the build artifacts via yarn publish (the publish command will implicitly run a yarn build for you as a lifecycle hook before the build artifacts are published). NOTE: You may be prompted for NPM credentials (username, email, password) during this step. These credentials are stored in 1Password in the Devops Admins vault. If you lack access, please reach out to #frontend-infra for further support.
+
 # Create React App [![Build & Test](https://github.com/facebook/create-react-app/actions/workflows/build-and-test.yml/badge.svg?branch=main)](https://github.com/facebook/create-react-app/actions/workflows/build-and-test.yml) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-green.svg)](https://github.com/facebook/create-react-app/blob/main/CONTRIBUTING.md)
 
 <img alt="Logo" align="right" src="https://create-react-app.dev/img/logo.svg" width="20%" />
